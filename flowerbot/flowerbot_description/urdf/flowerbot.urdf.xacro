@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<robot name="flowerbot" 
+  xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+  <xacro:include filename="$(find flowerbot_description)/urdf/flowerbot_library.urdf.xacro"/>
+  <xacro:property name="configuration_file" value="$(arg configuration_file)"/>
+  <xacro:property name="configuration" value="${load_yaml(configuration_file)}"/>
+
+
+  <xacro:include filename="${configuration['base_xacro']}"/>
+
+  <xacro:property name="wheel_count" value="${configuration['wheel_count']}"/>
+  <xacro:property name="wheel_description" value="${configuration['wheel_description']}"/>
+
+  <xacro:macro name="loop" params="wheel_qty">
+    <xacro:property name="wheel_name" value="wheel${wheel_count-wheel_qty}"/>
+    <xacro:property name="wheel_properties" value="${wheel_description[wheel_name]}"/>
+
+
+    <xacro:include filename="${wheel_properties['wheel_xacro']}"/>
+
+
+    <xacro:if value="${not wheel_properties['mirror_x'] and wheel_properties['mirror_y']}">
+      <xacro:property name="suspension_yaw" value="${M_PI}"/>
+      <xacro:property name="start_angle" value="${M_PI}"/>
+    </xacro:if>
+
+    <xacro:if value="${wheel_properties['mirror_x'] and wheel_properties['mirror_y']}">
+      <xacro:property name="suspension_yaw" value="${M_PI}"/>
+      <xacro:property name="start_angle" value="0"/>
+    </xacro:if>
+
+    <xacro:if value="${wheel_properties['mirror_x'] and not wheel_properties['mirror_y']}">
+      <xacro:property name="suspension_yaw" value="0"/>
+      <xacro:property name="start_angle" value="${M_PI}"/>
+    </xacro:if>
+
+    <xacro:if value="${not wheel_properties['mirror_x'] and not wheel_properties['mirror_y']}">
+      <xacro:property name="suspension_yaw" value="0"/>
+      <xacro:property name="start_angle" value="0"/>
+    </xacro:if>
+
+    <xacro:if value="${wheel_properties['with_suspension']}">
+      <xacro:include filename="${wheel_properties['suspension_xacro']}"/>
+      <suspension_modular root_link="base_link" suffix="${wheel_name}">
+        <origin xyz="${wheel_properties['suspension_x']} ${wheel_properties['suspension_y']} ${wheel_properties['suspension_z']}" rpy="0 0 ${suspension_yaw}" />
+      </suspension_modular>
+
+      <wheel_modular root_link="${wheel_name}_suspension_link" suffix="${wheel_name}" wheel_type="${wheel_properties['type']}" steering_start_angle="${start_angle}">
+        <origin xyz="${wheel_properties['wheel_x']} ${wheel_properties['wheel_y']} ${wheel_properties['wheel_z']}" rpy="0 0 0" />
+      </wheel_modular>
+    </xacro:if>
+    
+    <xacro:unless value="${wheel_properties['with_suspension']}">
+      <wheel_modular root_link="base_link" suffix="${wheel_name}" wheel_type="${wheel_properties['type']}" steering_start_angle="${start_angle}">
+        <origin xyz="${wheel_properties['wheel_x']} ${wheel_properties['wheel_y']} ${wheel_properties['wheel_z']}" rpy="0 0 0" />
+      </wheel_modular>
+    </xacro:unless>
+
+    <xacro:if value="${wheel_qty > 1}">
+      <xacro:loop wheel_qty="${wheel_qty-1}" />
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:loop wheel_qty="${wheel_count}" />
+  <xacro:include filename="$(find flowerbot_description)/urdf/flowerbot.gazebo.xacro"/>
+</robot>

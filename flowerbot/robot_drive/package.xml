@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>robot_drive</name>
+    <version>0.0.1</version>
+    <description>
+        This package provides image display functions.
+    </description>
+    <maintainer email="asilan@uga.edu">Rui Xu</maintainer>
+    <license>BSD</license>
+
+    <url>http://ros.org/wiki/image_display</url>
+    <author>Rui Xu</author>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <depend>roscpp</depend>
+    <depend>std_msgs</depend>
+    <depend>geometry_msgs</depend>
+    <depend>nav_msgs</depend>
+    <depend>robot_base</depend>
+    <depend>pluginlib</depend>
+</package>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<robot name="xacro_properties" 
+    xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="gazebo_material" params="link_name color mu1 mu2">
+        <gazebo reference="${link_name}">
+            <mu1>${mu1}</mu1>
+            <mu2>${mu2}</mu2>
+            <!-- <kp>1000000.0</kp>
+            <kd>100.0</kd> -->
+            <material>Gazebo/${color}</material>
+        </gazebo>
+    </xacro:macro>
+</robot>

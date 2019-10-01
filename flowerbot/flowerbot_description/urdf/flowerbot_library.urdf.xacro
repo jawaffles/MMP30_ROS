@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--
+  The complete flowerbot library of xacros for easy reference
+ -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find flowerbot_description)/urdf/common_properties.urdf.xacro"/>
+  <xacro:include filename="$(find flowerbot_description)/urdf/flowerbot_properties.urdf.xacro"/>
+  <xacro:include filename="$(find flowerbot_description)/urdf/gazebo_material.gazebo.xacro"/>
+</robot>

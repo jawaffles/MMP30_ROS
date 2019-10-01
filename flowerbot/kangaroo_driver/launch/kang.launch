@@ -1,0 +1,62 @@
+
+<launch>
+
+
+
+
+    <node pkg="kangaroo_driver" type="kangaroo_driver_test" name="kangaroo_driver_test"  output="screen"/>
+
+    <rosparam param="ticks_meter">33204</rosparam>
+    <rosparam param="encoder_min">-32531</rosparam>
+    <rosparam param="encoder_max">32740</rosparam>
+
+    <node pkg="differential_drive" type="twist_to_motors.py" name="twist_to_motors" output="screen">
+        <rosparam param="base_width">.420</rosparam>
+        <remap from="twist" to="mmp30/cmd_vel"/>
+    </node>
+
+
+    <node pkg="differential_drive" type="diff_tf.py" name="diff_tf" output="screen">
+        <rosparam param="base_width">.76</rosparam>
+        <remap from="lwheel" to="lwheelticks"/>
+        <remap from="rwheel" to="rwheelticks"/>
+        <remap from="/odom" to="/odometry/wheel"/>
+    
+    </node>
+
+
+	<node pkg="vectornav" type="vnpub" name="vectornav" output="screen" > 
+      <rosparam command="load" file="$(find vectornav)/params/vn100.yaml" />
+      <rosparam param="/vectornav/serial_port">/dev/ttyUSB1</rosparam>
+      <rosparam param="/vectornav/serial_baud">115200</rosparam>
+      <remap from="vectornav/IMU" to="/imu/data"/>
+   	  <rosparam command="load" file="$(find mmp30_control)/config/navsat_params.yaml" />	 
+
+	</node>	
+
+  <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+    <rosparam command="load" file="$(find kangaroo_driver)/config/twist_mux.yaml" />
+    <remap from="cmd_vel_out" to="mmp30/cmd_vel"/>
+  </node>
+
+
+    <!--Teleop -->
+    <include file="$(find kangaroo_driver)/launch/teleop.launch" />
+
+    
+    <!-- 
+    <node pkg="marvelmind_nav" type="hedge_rcv_bin" name="marv"  output="screen"  >
+    </node>
+
+    <node pkg= "hedge_msg_adapter"  type="hedge_msg_adapter" name="hedge_adap"  output="screen"  >
+    </node> -->
+
+
+</launch>
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+KangarooDriver:
+  controller_port: "/dev/ttyUSB0"
+  max_steering_speed: 800
+  driving_speed_ramp: 400
+  motor_calibration_zero: [0, 418, 0, 828]
+  motor_calibration_scale: [-67.532, 405.2, -67.532, 405.2]

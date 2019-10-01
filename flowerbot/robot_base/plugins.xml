@@ -1,0 +1,5 @@
+<library path="lib/libbasic_robot_controller">
+  <class name="robot_base/BasicRobotController" type="robot_base::BasicRobotController" base_class_type="robot_base::BaseRobotController">
+    <description>This is a robot controller plugin.</description>
+  </class>
+</library>

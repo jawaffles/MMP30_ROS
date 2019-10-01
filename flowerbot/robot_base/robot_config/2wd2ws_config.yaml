@@ -1,0 +1,61 @@
+name: "flowerbot"
+robot_controller: "robot_base/BasicRobotController"
+wheel_driver: "kangaroo_driver/KangarooDriver"
+wheel_count: 4
+COM_x: -0.3175
+COM_y: 0
+simulation: True
+base_xacro: "/home/ubuntu/catkin_ws/src/flowerbot/flowerbot_description/urdf/flowerbot_base.urdf.xacro"
+wheel_description:
+ {
+   wheel0: {id: 0,
+            with_suspension: True,
+            suspension_xacro: "/home/ubuntu/catkin_ws/src/flowerbot/flowerbot_description/urdf/flowerbot_suspension_modular.urdf.xacro",
+            suspension_x: 0.3048, suspension_y: -0.29195, suspension_z: 0.34024,
+            # position in the suspension frame
+            wheel_x: -0.142143, wheel_y: 0, wheel_z: -0.2778,
+            # this is the position in the robot frame
+            x: 0.44656, y: -0.29185,
+            wheel_xacro: "/home/ubuntu/catkin_ws/src/flowerbot/flowerbot_description/urdf/flowerbot_wheel_modular.urdf.xacro",
+            type: 1,
+            mirror_x: False,
+            mirror_y: True,
+            speed_lower_limit: -0.4, speed_upper_limit: 0.4,
+            angle_lower_limit: -1.5708, angle_upper_limit: 1.5708, angle_home: 1.5708,
+            wheel_radius: 0.127},
+   wheel1: {id: 1,
+            with_suspension: True,
+            suspension_xacro: "/home/ubuntu/catkin_ws/src/flowerbot/flowerbot_description/urdf/flowerbot_suspension_modular.urdf.xacro",
+            suspension_x: 0.3048, suspension_y: 0.29195, suspension_z: 0.34024,
+            wheel_x: -0.142143, wheel_y: 0, wheel_z: -0.2778,
+            x: 0.44656, y: 0.29185,
+            wheel_xacro: "/home/ubuntu/catkin_ws/src/flowerbot/flowerbot_description/urdf/flowerbot_wheel_modular.urdf.xacro",
+            type: 1,
+            mirror_x: True,
+            mirror_y: True,
+            speed_lower_limit: -0.4, speed_upper_limit: 0.4,
+            angle_lower_limit: -1.5708, angle_upper_limit: 1.5708, angle_home: 1.5708,
+            wheel_radius: 0.127},
+   wheel2: {id: 2,
+            with_suspension: False,
+            wheel_x: -0.3175, wheel_y: 0.2921, wheel_z: 0,
+            x: -0.3175, y: 0.2921,
+            wheel_xacro: "/home/ubuntu/catkin_ws/src/flowerbot/flowerbot_description/urdf/flowerbot_passive_wheel_modular.urdf.xacro",
+            type: 2,
+            mirror_x: True,
+            mirror_y: False,
+            speed_lower_limit: -0.4, speed_upper_limit: 0.4,
+            angle_lower_limit: -1.5708, angle_upper_limit: 1.5708, angle_home: 1.5708,
+            wheel_radius: 0.1016},
+   wheel3: {id: 3,
+            with_suspension: False,
+            wheel_x: -0.3175, wheel_y: -0.2921, wheel_z: 0,
+            x: -0.3175, y: -0.2921,
+            wheel_xacro: "/home/ubuntu/catkin_ws/src/flowerbot/flowerbot_description/urdf/flowerbot_passive_wheel_modular.urdf.xacro",
+            type: 2,
+            mirror_x: False,
+            mirror_y: False,
+            speed_lower_limit: -0.4, speed_upper_limit: 0.4,
+            angle_lower_limit: -1.5708, angle_upper_limit: 1.5708, angle_home: 1.5708,
+            wheel_radius: 0.1016}
+ }

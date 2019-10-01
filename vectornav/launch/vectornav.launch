@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+ 	<!-- <node pkg="tf" type="static_transform_publisher" name="transform_baselink_to_imu" args=".03 0 0.06 0 3.14159 0   base_link imu_link 10" /> -->
+
+
+	<node pkg="vectornav" type="vnpub" name="vectornav" output="screen" > 
+      <rosparam command="load" file="$(find vectornav)/params/vn100.yaml" />
+	<rosparam command="load" file="$(find mmp30_control)/config/navsat_params.yaml" />	 
+
+	</node>	
+	
+</launch>
+
+

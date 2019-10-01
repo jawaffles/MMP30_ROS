@@ -1,0 +1,5 @@
+<library path="lib/libkangaroo_driver">
+  <class name="kangaroo_driver/KangarooDriver" type="kangaroo_driver::KangarooDriver" base_class_type="robot_base::BaseWheelDriver">
+    <description>This is a base wheel driver plugin.</description>
+  </class>
+</library>

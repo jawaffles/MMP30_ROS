@@ -1,0 +1,49 @@
+ <!-- Launch file for the robot navigation. In this file, the imu and gps are simulated data. -->
+
+
+ <launch>	<!-- Publish static TF -->
+ 	<node pkg="tf" type="static_transform_publisher" name="transform_baselink_to_laser" args="0.11 0 0.29 0 0 0 base_link laser 10" />
+ 	<node pkg="tf" type="static_transform_publisher" name="transform_baselink_to_imu" args="0 0 0.06 0 0 0 1 base_link imu_link 10" />
+ 	<node pkg="tf" type="static_transform_publisher" name="transform_baselink_to_basefootprint" args="0 0 0 0 0 0 1 base_footprint base_link 10" />
+ 	<node pkg="tf" type="static_transform_publisher" name="transform_baselink_to_gps" args="0.29 0 0.1 0 0 0 1 base_link gps_link 10" />
+
+        	
+	<!-- Robot node to get GPS, IMU and encoder information and send cmd_vel to the robot -->
+ 	<node pkg="robot_due" type="robot_due_node" name="robot_due_node" args="/dev/arduino" required="true" output="screen">
+ 		<param name="imu_simulation" value="false"/>
+		<param name="gps_simulation" value="true"/>
+ 		<param name="location_origin_x" value="1.0"/>
+ 		<param name="location_origin_y" value="1.0"/>
+ 		<param name="location_origin_z" value="0.0"/>
+ 		<param name="orientation_origin_x" value="0"/>
+ 		<param name="orientation_origin_y" value="0"/>
+ 		<param name="orientation_origin_z" value="0"/>
+		<param name="yaw_offset" value="-199.27556"/>
+		<!--remap from="cmd_vel" to="twist_marker_server/cmd_vel"/-->
+		<remap from="odometry/gps" to="robot_due/odom"/>
+ 	</node>
+
+
+
+
+
+	<!-- Node to read LiDAR 
+	<node pkg="urg_node" type="urg_node" name="laser" args="/dev/hokuyo">
+		<param name="cluster" value="1"/>
+		<param name="skip" value="0"/>
+		<param name="intensity" value="false"/>
+		<param name="frame_id" value="laser"/>
+		<param name="angle_min" value="-1.2"/>
+		<param name="angle_max" value="1.2"/>
+	</node -->
+
+
+	<!-- Node to set up a websocket for comminucation with the webpgae -->
+	<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+		<arg name="port" value="9090"/>
+		<arg name="ssl" default="false"/>
+		<arg name="certfile" default="/etc/ssl/localcerts/apache.crt" />
+		<arg name="keyfile" default="/etc/ssl/localcerts/apache.key" />
+		<arg name="authenticate" default="false" />
+	</include>	
+ </launch>

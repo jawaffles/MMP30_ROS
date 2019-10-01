@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<robot name="flowerbot_suspension_modular" 
+    xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find flowerbot_description)/urdf/flowerbot_library.urdf.xacro"/>
+    <xacro:macro name="suspension_modular" params="root_link suffix *root_link_origin">
+
+        <xacro:gazebo_material link_name="${suffix}_suspension_link" color="Blue" mu1="0" mu2="0"/>
+        <link name="${suffix}_suspension_link">
+            <inertial>
+                <origin xyz="-0.13  0 -0.15" rpy="0 0 0" />
+                <mass value="0.28" />
+                <inertia ixx="0.001" ixy="0" ixz="0.0" iyy="0.0" iyz="0.001" izz="0.001" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://flowerbot_description/meshes/suspension_link.STL" />
+                </geometry>
+                <material name="material_blue"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://flowerbot_description/meshes/suspension_link.STL" />
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${suffix}_suspension_joint" type="fixed">
+            <xacro:insert_block name="root_link_origin" />
+            <parent link="${root_link}"/>
+            <child link="${suffix}_suspension_link"/>
+        </joint>
+    </xacro:macro>
+</robot>
